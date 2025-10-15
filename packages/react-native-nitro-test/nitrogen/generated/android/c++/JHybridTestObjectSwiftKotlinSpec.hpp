@@ -81,6 +81,7 @@ namespace margelo::nitro::test {
     // Methods
     std::shared_ptr<HybridTestObjectSwiftKotlinSpec> newTestObject() override;
     std::variant<Person, std::shared_ptr<HybridTestObjectSwiftKotlinSpec>> getVariantHybrid(const std::variant<Person, std::shared_ptr<HybridTestObjectSwiftKotlinSpec>>& variant) override;
+    void foo(const Foo& foo) override;
     void simpleFunc() override;
     double addNumbers(double a, double b) override;
     std::string addStrings(const std::string& a, const std::string& b) override;

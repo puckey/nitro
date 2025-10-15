@@ -1,11 +1,11 @@
 import {
-  type HybridObject,
   type AnyMap,
-  type Sync,
   type CustomType,
+  type HybridObject,
+  type Sync,
 } from 'react-native-nitro-modules'
-import type { TestView } from './TestView.nitro'
 import type { SomeExternalObject } from 'react-native-nitro-test-external'
+import type { TestView } from './TestView.nitro'
 
 // Tuples become `std::tuple<...>` in C++.
 // In contrast to arrays, they are length-checked, and can have different types inside them.
@@ -82,10 +82,16 @@ export type CustomString = CustomType<
   { include: 'CustomString.hpp' }
 >
 
+interface Foo {
+  bar?: (() => void) | number
+}
+
 // This is an `interface` we're going to use as a base in both of our `HybridObject`s later.
 // In this case, the `HybridObject`s will just flatten out and copy over all properties here.
 // There is no separate type for `SharedTestObjectProps` on the native side.
 interface SharedTestObjectProps {
+  foo(foo: Foo): void
+
   // Test Primitives
   numberValue: number
   boolValue: boolean

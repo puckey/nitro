@@ -20,6 +20,8 @@ namespace margelo::nitro::test { enum class Powertrain; }
 namespace margelo::nitro::test { enum class OldEnum; }
 // Forward declaration of `Person` to properly resolve imports.
 namespace margelo::nitro::test { struct Person; }
+// Forward declaration of `Foo` to properly resolve imports.
+namespace margelo::nitro::test { struct Foo; }
 // Forward declaration of `Car` to properly resolve imports.
 namespace margelo::nitro::test { struct Car; }
 // Forward declaration of `AnyMap` to properly resolve imports.
@@ -59,6 +61,7 @@ namespace margelo::nitro::test::external { class HybridSomeExternalObjectSpec; }
 #include <functional>
 #include <variant>
 #include "Person.hpp"
+#include "Foo.hpp"
 #include "Car.hpp"
 #include <NitroModules/AnyMap.hpp>
 #include <unordered_map>
@@ -225,6 +228,12 @@ namespace margelo::nitro::test {
       }
       auto __value = std::move(__result.value());
       return __value;
+    }
+    inline void foo(const Foo& foo) override {
+      auto __result = _swiftPart.foo(std::forward<decltype(foo)>(foo));
+      if (__result.hasError()) [[unlikely]] {
+        std::rethrow_exception(__result.error());
+      }
     }
     inline void simpleFunc() override {
       auto __result = _swiftPart.simpleFunc();

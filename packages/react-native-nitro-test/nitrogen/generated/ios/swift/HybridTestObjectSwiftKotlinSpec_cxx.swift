@@ -445,6 +445,17 @@ open class HybridTestObjectSwiftKotlinSpec_cxx {
   }
   
   @inline(__always)
+  public final func foo(foo: Foo) -> bridge.Result_void_ {
+    do {
+      try self.__implementation.foo(foo: foo)
+      return bridge.create_Result_void_()
+    } catch (let __error) {
+      let __exceptionPtr = __error.toCpp()
+      return bridge.create_Result_void_(__exceptionPtr)
+    }
+  }
+  
+  @inline(__always)
   public final func simpleFunc() -> bridge.Result_void_ {
     do {
       try self.__implementation.simpleFunc()

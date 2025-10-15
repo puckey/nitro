@@ -35,6 +35,8 @@ namespace margelo::nitro::test { class HybridBaseSpec; }
 namespace margelo::nitro::test { class HybridChildSpec; }
 // Forward declaration of `HybridSomeExternalObjectSpec` to properly resolve imports.
 namespace margelo::nitro::test::external { class HybridSomeExternalObjectSpec; }
+// Forward declaration of `Foo` to properly resolve imports.
+namespace margelo::nitro::test { struct Foo; }
 // Forward declaration of `MapWrapper` to properly resolve imports.
 namespace margelo::nitro::test { struct MapWrapper; }
 // Forward declaration of `SecondMapWrapper` to properly resolve imports.
@@ -91,13 +93,16 @@ namespace margelo::nitro::test { class HybridTestViewSpec; }
 #include "JHybridChildSpec.hpp"
 #include <NitroTestExternal/HybridSomeExternalObjectSpec.hpp>
 #include <NitroTestExternal/JHybridSomeExternalObjectSpec.hpp>
+#include "Foo.hpp"
+#include "JFoo.hpp"
+#include "JVariant_Double_______Unit.hpp"
+#include "JFunc_void.hpp"
 #include "JFunc_void_std__vector_Powertrain_.hpp"
 #include "MapWrapper.hpp"
 #include "JMapWrapper.hpp"
 #include "SecondMapWrapper.hpp"
 #include "JSecondMapWrapper.hpp"
 #include <exception>
-#include "JFunc_void.hpp"
 #include "JFunc_void_std__optional_double_.hpp"
 #include "JFunc_std__shared_ptr_Promise_double__.hpp"
 #include "JFunc_std__shared_ptr_Promise_std__shared_ptr_Promise_double____.hpp"
@@ -292,6 +297,10 @@ namespace margelo::nitro::test {
     static const auto method = javaClassStatic()->getMethod<jni::local_ref<JVariant_Person_HybridTestObjectSwiftKotlinSpec>(jni::alias_ref<JVariant_Person_HybridTestObjectSwiftKotlinSpec> /* variant */)>("getVariantHybrid");
     auto __result = method(_javaPart, JVariant_Person_HybridTestObjectSwiftKotlinSpec::fromCpp(variant));
     return __result->toCpp();
+  }
+  void JHybridTestObjectSwiftKotlinSpec::foo(const Foo& foo) {
+    static const auto method = javaClassStatic()->getMethod<void(jni::alias_ref<JFoo> /* foo */)>("foo");
+    method(_javaPart, JFoo::fromCpp(foo));
   }
   void JHybridTestObjectSwiftKotlinSpec::simpleFunc() {
     static const auto method = javaClassStatic()->getMethod<void()>("simpleFunc");

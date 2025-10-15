@@ -139,6 +139,10 @@ abstract class HybridTestObjectSwiftKotlinSpec: HybridObject() {
   
   @DoNotStrip
   @Keep
+  abstract fun foo(foo: Foo): Unit
+  
+  @DoNotStrip
+  @Keep
   abstract fun simpleFunc(): Unit
   
   @DoNotStrip

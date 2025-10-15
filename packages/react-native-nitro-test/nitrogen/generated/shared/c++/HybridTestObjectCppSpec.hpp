@@ -21,6 +21,8 @@ namespace margelo::nitro::test { enum class Powertrain; }
 namespace margelo::nitro::test { enum class OldEnum; }
 // Forward declaration of `Person` to properly resolve imports.
 namespace margelo::nitro::test { struct Person; }
+// Forward declaration of `Foo` to properly resolve imports.
+namespace margelo::nitro::test { struct Foo; }
 // Forward declaration of `Car` to properly resolve imports.
 namespace margelo::nitro::test { struct Car; }
 // Forward declaration of `AnyMap` to properly resolve imports.
@@ -58,6 +60,7 @@ namespace margelo::nitro::test::external { class HybridSomeExternalObjectSpec; }
 #include <variant>
 #include "Person.hpp"
 #include "CustomString.hpp"
+#include "Foo.hpp"
 #include "Car.hpp"
 #include <NitroModules/AnyMap.hpp>
 #include <unordered_map>
@@ -140,6 +143,7 @@ namespace margelo::nitro::test {
       virtual std::shared_ptr<HybridTestObjectCppSpec> newTestObject() = 0;
       virtual std::variant<std::shared_ptr<HybridTestObjectCppSpec>, Person> getVariantHybrid(const std::variant<std::shared_ptr<HybridTestObjectCppSpec>, Person>& variant) = 0;
       virtual CustomString bounceCustomType(CustomString value) = 0;
+      virtual void foo(const Foo& foo) = 0;
       virtual void simpleFunc() = 0;
       virtual double addNumbers(double a, double b) = 0;
       virtual std::string addStrings(const std::string& a, const std::string& b) = 0;

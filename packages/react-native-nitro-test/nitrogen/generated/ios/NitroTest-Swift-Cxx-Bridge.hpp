@@ -146,6 +146,72 @@ namespace margelo::nitro::test::bridge::swift {
     return std__variant_Person__std__shared_ptr_HybridTestObjectSwiftKotlinSpec__(value);
   }
   
+  // pragma MARK: std::function<void()>
+  /**
+   * Specialized version of `std::function<void()>`.
+   */
+  using Func_void = std::function<void()>;
+  /**
+   * Wrapper class for a `std::function<void()>`, this can be used from Swift.
+   */
+  class Func_void_Wrapper final {
+  public:
+    explicit Func_void_Wrapper(std::function<void()>&& func): _function(std::make_unique<std::function<void()>>(std::move(func))) {}
+    inline void call() const noexcept {
+      _function->operator()();
+    }
+  private:
+    std::unique_ptr<std::function<void()>> _function;
+  } SWIFT_NONCOPYABLE;
+  Func_void create_Func_void(void* NON_NULL swiftClosureWrapper) noexcept;
+  inline Func_void_Wrapper wrap_Func_void(Func_void value) noexcept {
+    return Func_void_Wrapper(std::move(value));
+  }
+  
+  // pragma MARK: std::variant<double, std::function<void()>>
+  /**
+   * Wrapper struct for `std::variant<double, std::function<void()>>`.
+   * std::variant cannot be used in Swift because of a Swift bug.
+   * Not even specializing it works. So we create a wrapper struct.
+   */
+  struct std__variant_double__std__function_void____ {
+    std::variant<double, std::function<void()>> variant;
+    std__variant_double__std__function_void____(std::variant<double, std::function<void()>> variant): variant(variant) { }
+    operator std::variant<double, std::function<void()>>() const noexcept {
+      return variant;
+    }
+    inline size_t index() const noexcept {
+      return variant.index();
+    }
+    inline double get_0() const noexcept {
+      return std::get<0>(variant);
+    }
+    inline std::function<void()> get_1() const noexcept {
+      return std::get<1>(variant);
+    }
+  };
+  inline std__variant_double__std__function_void____ create_std__variant_double__std__function_void____(double value) noexcept {
+    return std__variant_double__std__function_void____(value);
+  }
+  inline std__variant_double__std__function_void____ create_std__variant_double__std__function_void____(const std::function<void()>& value) noexcept {
+    return std__variant_double__std__function_void____(value);
+  }
+  
+  // pragma MARK: std::optional<std::variant<double, std::function<void()>>>
+  /**
+   * Specialized version of `std::optional<std::variant<double, std::function<void()>>>`.
+   */
+  using std__optional_std__variant_double__std__function_void_____ = std::optional<std::variant<double, std::function<void()>>>;
+  inline std::optional<std::variant<double, std::function<void()>>> create_std__optional_std__variant_double__std__function_void_____(const std::variant<double, std::function<void()>>& value) noexcept {
+    return std::optional<std::variant<double, std::function<void()>>>(value);
+  }
+  inline bool has_value_std__optional_std__variant_double__std__function_void_____(const std::optional<std::variant<double, std::function<void()>>>& optional) noexcept {
+    return optional.has_value();
+  }
+  inline std::variant<double, std::function<void()>> get_std__optional_std__variant_double__std__function_void_____(const std::optional<std::variant<double, std::function<void()>>>& optional) noexcept {
+    return *optional;
+  }
+  
   // pragma MARK: std::optional<std::string>
   /**
    * Specialized version of `std::optional<std::string>`.
@@ -441,28 +507,6 @@ namespace margelo::nitro::test::bridge::swift {
   }
   inline PromiseHolder<void> wrap_std__shared_ptr_Promise_void__(std::shared_ptr<Promise<void>> promise) noexcept {
     return PromiseHolder<void>(std::move(promise));
-  }
-  
-  // pragma MARK: std::function<void()>
-  /**
-   * Specialized version of `std::function<void()>`.
-   */
-  using Func_void = std::function<void()>;
-  /**
-   * Wrapper class for a `std::function<void()>`, this can be used from Swift.
-   */
-  class Func_void_Wrapper final {
-  public:
-    explicit Func_void_Wrapper(std::function<void()>&& func): _function(std::make_unique<std::function<void()>>(std::move(func))) {}
-    inline void call() const noexcept {
-      _function->operator()();
-    }
-  private:
-    std::unique_ptr<std::function<void()>> _function;
-  } SWIFT_NONCOPYABLE;
-  Func_void create_Func_void(void* NON_NULL swiftClosureWrapper) noexcept;
-  inline Func_void_Wrapper wrap_Func_void(Func_void value) noexcept {
-    return Func_void_Wrapper(std::move(value));
   }
   
   // pragma MARK: std::function<void(const std::exception_ptr& /* error */)>
