@@ -21,6 +21,13 @@ void install(jsi::Runtime& runtime, std::shared_ptr<Dispatcher> dispatcher) {
 }
 
 void install(jsi::Runtime& runtime) {
+  // Check if already installed (by another Nitro module)
+  const char* proxyName = ObjectUtils::getKnownGlobalPropertyNameString(KnownGlobalPropertyName::NITRO_MODULES_PROXY);
+  if (runtime.global().hasProperty(runtime, proxyName)) {
+    // Already installed, skip
+    return;
+  }
+
   // Installs global.NitroModulesProxy
   auto proxy = std::make_shared<HybridNitroModulesProxy>();
   ObjectUtils::defineGlobal(runtime, KnownGlobalPropertyName::NITRO_MODULES_PROXY, proxy->toObject(runtime));

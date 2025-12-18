@@ -23,6 +23,17 @@ using namespace facebook;
 std::unordered_map<jsi::Runtime * NON_NULL, std::weak_ptr<Dispatcher>> Dispatcher::_globalCache;
 
 void Dispatcher::installRuntimeGlobalDispatcher(jsi::Runtime& runtime, std::shared_ptr<Dispatcher> dispatcher) {
+  // Check if already installed (by another Nitro module)
+  const char* dispatcherName = ObjectUtils::getKnownGlobalPropertyNameString(KnownGlobalPropertyName::DISPATCHER);
+  if (runtime.global().hasProperty(runtime, dispatcherName)) {
+    Logger::log(LogLevel::Info, TAG, "Dispatcher already installed for Runtime \"%s\", updating local cache...",
+                getRuntimeId(runtime).c_str());
+    // Update local cache with existing dispatcher from global
+    jsi::Value existing = runtime.global().getProperty(runtime, dispatcherName);
+    _globalCache[&runtime] = JSIConverter<std::shared_ptr<Dispatcher>>::fromJSI(runtime, existing);
+    return;
+  }
+
   Logger::log(LogLevel::Info, TAG, "Installing global Dispatcher Holder into Runtime \"%s\"...", getRuntimeId(runtime).c_str());
 
   // Store a weak reference in global cache

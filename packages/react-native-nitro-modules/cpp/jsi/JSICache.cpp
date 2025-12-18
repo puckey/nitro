@@ -47,6 +47,18 @@ JSICacheReference JSICache::getOrCreateCache(jsi::Runtime& runtime) {
     Logger::log(LogLevel::Warning, TAG, "JSICache was created, but it is no longer strong!");
   }
 
+  // Check if JSICache already exists in the runtime's global (installed by another Nitro module)
+  const char* cacheName = ObjectUtils::getKnownGlobalPropertyNameString(KnownGlobalPropertyName::JSI_CACHE);
+  if (runtime.global().hasProperty(runtime, cacheName)) {
+    Logger::log(LogLevel::Info, TAG, "JSICache already exists for runtime %s, reusing from global..", getRuntimeId(runtime).c_str());
+    jsi::Object existingCache = runtime.global().getPropertyAsObject(runtime, cacheName);
+    std::shared_ptr<JSICache> existingNativeState = std::dynamic_pointer_cast<JSICache>(existingCache.getNativeState(runtime));
+    if (existingNativeState) {
+      _globalCache[&runtime] = existingNativeState;
+      return JSICacheReference(existingNativeState);
+    }
+  }
+
   // Cache doesn't exist yet.
   Logger::log(LogLevel::Info, TAG, "Creating new JSICache<T> for runtime %s..", getRuntimeId(runtime).c_str());
   // Create new cache
